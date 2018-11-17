@@ -1,0 +1,8 @@
+root_cert: |
+        -----BEGIN CERTIFICATE-----
+        8IdNBEvV58XqSeM6po+W7UYHFrJuZdpLcjdfoyF4iQIDAQABMA0GCSqGSIb3DQEB
+        RHoJd77/mYNkdfNZc9aZ/GdCOFY9zwukYPRIpTVVi6xua6CNlEaXjaj8NVc8z0v9
+        -----END CERTIFICATE-----
+root_key: |
+        some-key
+        bugoga
