@@ -1,0 +1,17 @@
+---
+# handlers file for l2tp
+- name: restart ipsec
+  service: name=strongswan state=restarted
+  listen: restart
+- name: restart xl2tpd
+  service: name=xl2tpd state=restarted
+  listen: restart
+
+- name: reload systemd daemon
+  command: "systemctl daemon-reload"
+  listen: restart iptables
+
+- name: restart iptables
+  service: name=iptables state=restarted
+  listen: restart iptables
+

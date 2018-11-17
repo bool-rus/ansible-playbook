@@ -1,0 +1,61 @@
+---
+# tasks file for l2tp
+- name: Install apt packages
+  apt: 
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - strongswan
+      - xl2tpd
+      - ppp
+
+- name: generate ipsec.conf
+  template:
+    src: ipsec.conf
+    dest: /etc/ipsec.conf
+  notify: restart
+
+- name: copy ipsec.secrets
+  copy:
+    src: ipsec.secrets
+    dest: /etc/ipsec.secrets
+  notify: restart
+
+- name: generate xl2tpd.conf
+  template:
+    src: xl2tpd.conf
+    dest: /etc/xl2tpd/xl2tpd.conf
+  notify: restart
+
+- name: copy options.xl2tpd
+  copy:
+    src: options.xl2tpd
+    dest: /etc/ppp/options.xl2tpd
+  notify: restart
+
+- name: copy chap-secrets
+  copy:
+    src: chap-secrets
+    dest: /etc/ppp/chap-secrets
+  notify: restart
+
+- name: create iptables.rules folder
+  file: 
+    path: /var/lib/iptables
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: copy iptables-rules
+  template:
+    src: iptables.rules
+    dest: /var/lib/iptables/iptables.rules
+  notify: restart iptables
+
+- name: create service iptables
+  copy:
+    src: iptables.service
+    dest: /etc/systemd/system/iptables.service
+  notify: restart iptables
+

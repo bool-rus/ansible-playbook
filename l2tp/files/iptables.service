@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=Restore iptables rules
+Before=network-pre.target
+Conflicts=shutdown.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/iptables-restore /var/lib/iptables/iptables.rules
+
+[Install]
+WantedBy=basic.target
+

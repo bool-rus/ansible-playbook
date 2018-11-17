@@ -1,0 +1,9 @@
+---
+# tasks file for nginx
+- name: Install nginx
+  apt:
+          name: nginx-light
+- name: start service
+  service:
+          name: nginx
+          state: started

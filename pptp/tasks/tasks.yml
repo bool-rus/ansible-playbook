@@ -1,0 +1,26 @@
+---
+# tasks file for l2tp
+- name: Install apt packages
+  apt: 
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - pptpd
+
+- name: generate pptpd.conf
+  template:
+    src: pptpd.conf
+    dest: /etc/pptpd.conf
+  notify: restart pptpd
+
+- name: copy pptpd-options
+  copy:
+    src: pptpd-options
+    dest: /etc/ppp/pptpd-options
+  notify: restart pptpd
+
+- name: copy chap-secrets
+  copy:
+    src: chap-secrets
+    dest: /etc/ppp/chap-secrets
+  notify: restart pptpd

@@ -1,0 +1,4 @@
+---
+- hosts: msk
+  roles:
+   - { role: l2tp}
