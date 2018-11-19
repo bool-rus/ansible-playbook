@@ -1,0 +1,3 @@
+---
+ovpn_root: /etc/openvpn/server
+# vars file for ovpn

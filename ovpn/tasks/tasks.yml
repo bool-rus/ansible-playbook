@@ -1,0 +1,23 @@
+---
+- name: Install apt packages
+  apt: name=openvpn
+
+- name: create dh params
+  command: openssl -out {{ovpn_root}}/dh2048.pem 2048 creates={{ovpn_root}}/dh2048.pem
+
+- name: create config
+  template:
+    src: server.conf
+    dest: {{ovpn_root}}/server.conf
+- name: create ca cert
+  template:
+    src: ca.crt
+    dest: {{ovpn_root}}/ca.crt
+- name: create server cert
+  template:
+    src: server.crt
+    dest: {{ovpn_root}}/server.crt
+- name: create server key
+  template:
+    src: server.key
+    dest: {{ovpn_root}}/server.key
