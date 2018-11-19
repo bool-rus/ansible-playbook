@@ -1,0 +1,1 @@
+{{hostvars['me']['root_cert']}}
