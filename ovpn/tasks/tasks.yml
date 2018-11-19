@@ -3,21 +3,26 @@
   apt: name=openvpn
 
 - name: create dh params
-  command: openssl -out {{ovpn_root}}/dh2048.pem 2048 creates={{ovpn_root}}/dh2048.pem
+  command: openssl dhparam -out {{ovpn_root}}/dh2048.pem 2048 creates={{ovpn_root}}/dh2048.pem
 
 - name: create config
   template:
     src: server.conf
-    dest: {{ovpn_root}}/server.conf
+    dest: "{{ovpn_root}}/server.conf"
+  notify: restart
 - name: create ca cert
   template:
     src: ca.crt
-    dest: {{ovpn_root}}/ca.crt
+    dest: "{{ovpn_root}}/ca.crt"
 - name: create server cert
   template:
     src: server.crt
-    dest: {{ovpn_root}}/server.crt
+    dest: "{{ovpn_root}}/server.crt"
 - name: create server key
   template:
     src: server.key
-    dest: {{ovpn_root}}/server.key
+    dest: "{{ovpn_root}}/server.key"
+- name: create ccd folder
+  file: 
+    path: "{{ovpn_root}}/ccd"
+    state: directory

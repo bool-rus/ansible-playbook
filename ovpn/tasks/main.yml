@@ -1,2 +1,2 @@
 ---
-# tasks file for ovpn
+- { include: tasks.yml, become: yes }

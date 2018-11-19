@@ -1,7 +1,7 @@
 ---
 - name: restart openvpn
   service: 
-    name: openvpn@server
+    name: openvpn-server@server
     state: restarted
   listen: restart
 # handlers file for ovpn
