@@ -1,0 +1,37 @@
+---
+- name: create service iptables
+  copy: 
+    src: iptables.service
+    dest: /etc/systemd/system/iptables.service
+  notify: reload systemd
+
+- name: create iptables.rules folder
+  file: 
+    path: /var/lib/iptables
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  notify: enable iptables
+  
+- name: create restore iptables rules script
+  copy: 
+    src: restore.sh
+    dest: /var/lib/iptables/restore.sh
+    mode: '500'
+
+- name: copy iptables rules
+  template: src={{ item }} dest=/var/lib/iptables/{{item}} 
+  with_items: 
+    - mangle.iptables
+    - nat.iptables
+    - filter.iptables
+  notify: restart iptables
+
+- name: enable forwarding
+  lineinfile:
+    path: /etc/sysctl.conf  
+    regexp: '^net\.ipv4\.ip_forward'
+    line: 'net.ipv4.ip_forward=1'
+    state: present
+  notify: reboot

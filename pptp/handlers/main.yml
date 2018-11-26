@@ -2,3 +2,6 @@
 # handlers file for pptp
 - name: restart pptpd
   service: name=pptpd state=restarted
+
+- name: enable pptpd
+  command: systemctl enable pptpd

@@ -1,0 +1,12 @@
+
+*mangle
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+-A PREROUTING -i ppp+ -j MARK --set-mark {{ mark['tunnel'] }}
+-A PREROUTING -i tun+ -j MARK --set-mark {{ mark['tunnel'] }}
+-A PREROUTING -i {{ ansible_default_ipv4['interface'] }} -j MARK --set-mark {{ mark['iface'] }}
+-A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+COMMIT

@@ -6,6 +6,7 @@
   vars:
     packages:
       - pptpd
+  notify: enable pptpd
 
 - name: generate pptpd.conf
   template:
@@ -19,8 +20,14 @@
     dest: /etc/ppp/pptpd-options
   notify: restart pptpd
 
-- name: copy chap-secrets
-  copy:
-    src: chap-secrets
+- name: generate chap-secrets
+  template:
+    src: chap-secrets.vault
     dest: /etc/ppp/chap-secrets
   notify: restart pptpd
+
+- name: generate ip-up rules
+  template: 
+    src: ip-up-routes.sh
+    dest: /etc/ppp/ip-up.d/routes
+    mode: '500'

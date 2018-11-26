@@ -1,4 +1,13 @@
 ---
+- hosts: all
+  gather_facts: False
+  tasks:
+    - name: install python
+      raw: test -e /usr/bin/python || (apt -qy update && apt install -y python)
+      register: output
+      changed_when: output.stdout
+
 - hosts: msk
   roles:
-   - { role: l2tp}
+   - pptp
+   - router

@@ -1,0 +1,9 @@
+
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A FORWARD -m mark --mark {{mark['tunnel']}} -j ACCEPT
+-A FORWARD -d {{ hostvars['me'].video.host }} -p tcp -m tcp --dport {{ hostvars['me'].video.port }} -j ACCEPT
+-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+COMMIT

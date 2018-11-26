@@ -17,7 +17,7 @@
 
 - name: copy ipsec.secrets
   copy:
-    src: ipsec.secrets
+    src: ipsec.secrets.vault
     dest: /etc/ipsec.secrets
   notify: restart
 
@@ -35,7 +35,7 @@
 
 - name: copy chap-secrets
   copy:
-    src: chap-secrets
+    src: chap-secrets.vault
     dest: /etc/ppp/chap-secrets
   notify: restart
 
