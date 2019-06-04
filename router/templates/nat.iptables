@@ -7,4 +7,5 @@
 -A PREROUTING -i {{ ansible_default_ipv4['interface'] }} -p tcp -m tcp --dport {{ hostvars['me'].video.port }} -j DNAT --to-destination {{ hostvars['me'].video.host }}
 -A POSTROUTING -o {{ ansible_default_ipv4['interface'] }} -m mark --mark {{ mark['tunnel'] }} -j MASQUERADE
 -A POSTROUTING -d {{hostvars['me'].video.host}} -p tcp -m mark --mark {{mark['iface']}} -m tcp --dport {{ hostvars['me'].video.port }} -j MASQUERADE
+-A POSTROUTING -m mark --mark {{ mark['tunnel'] }} -j MASQUERADE
 COMMIT
